@@ -73,13 +73,13 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class GalleryFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    public GridView gridView;
+    static public GridView gridView;
     public Button camera;
     public Button gallery;
     public Context context;
     public GalleryAdapter adapter;
     public ArrayList<Uri> imageID = new ArrayList<Uri>();
-    TextView tvData;
+//    TextView tvData;
     ApiService apiService;
     Uri picUri;
     private ArrayList<String> permissionsToRequest;
@@ -141,7 +141,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
             }
         });*/ //1주차 관련 UI
-        tvData = view.findViewById(R.id.textView2);
+//        tvData = view.findViewById(R.id.textView2);
         fabCamera = view.findViewById(R.id.fab);
         fabUpload = view.findViewById(R.id.fabUpload);
         textView = view.findViewById(R.id.textView);
@@ -533,7 +533,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
             Log.d("adapter_run","adapter_running!!!!!!!");
             gridView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            tvData.setText(result);//서버로 부터 받은 값을 출력해주는 부
+//            tvData.setText(result);//서버로 부터 받은 값을 출력해주는 부
         }
     }
 
