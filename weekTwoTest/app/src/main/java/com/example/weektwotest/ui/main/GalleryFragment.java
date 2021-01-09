@@ -31,6 +31,8 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weektwotest.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -73,11 +75,12 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class GalleryFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    static public GridView gridView;
+//    static public GridView gridView;
+    static RecyclerView recyclerView;
     public Button camera;
     public Button gallery;
     public Context context;
-    public GalleryAdapter adapter;
+    public GalleryAdapter2 adapter;
     public ArrayList<Uri> imageID = new ArrayList<Uri>();
 //    TextView tvData;
     ApiService apiService;
@@ -102,8 +105,10 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.gallery_fragment, container, false);
-        gridView = view.findViewById(R.id.gridViewImages);
+        View view = inflater.inflate(R.layout.gallery_fragment2, container, false);
+        recyclerView = view.findViewById(R.id.recyclerview_gallery_images);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         /*
         camera = view.findViewById(R.id.camera);
         gallery = view.findViewById(R.id.gallery);
@@ -529,10 +534,15 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
             }
             //new ImageRoader().getBitmapImg(images.get(0));
-            adapter = new GalleryAdapter(context, images);
+            adapter = new GalleryAdapter2(getContext(), images, new GalleryAdapter2.PhotoListener() {
+                @Override
+                public void onPhotoClick(String path) {
+
+                }
+            });
             Log.d("adapter_run","adapter_running!!!!!!!");
-            gridView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+//            adapter.notifyDataSetChanged();
 //            tvData.setText(result);//서버로 부터 받은 값을 출력해주는 부
         }
     }

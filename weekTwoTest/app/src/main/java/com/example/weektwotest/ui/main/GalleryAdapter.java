@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 
-import static com.example.weektwotest.ui.main.GalleryFragment.gridView;
+//import static com.example.weektwotest.ui.main.GalleryFragment.gridView;
 
 public class GalleryAdapter extends BaseAdapter {
 
