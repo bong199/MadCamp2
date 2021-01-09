@@ -69,7 +69,7 @@ public class PhoneNumberFragment extends Fragment {
             }
         });
         System.out.println("reached1");
-        new JSONTask().execute("http://192.249.18.227:3000/post1");
+        new JSONTask().execute("http://192.249.18.247:3000/post");
         return view;
     }
     public class JSONTask extends AsyncTask<String, String, String>{
