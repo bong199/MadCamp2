@@ -2,15 +2,13 @@ package com.example.weektwotest.ui.main;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -23,12 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,20 +51,21 @@ public class PhoneNumberFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        System.out.println("fffffff2");
         View view = inflater.inflate(R.layout.phonenumber_fragment, container, false);
         //tempTextView = view.findViewById(R.id.tempTV);
         listView = view.findViewById(R.id.cont_lv);
         FloatingActionButton fab = view.findViewById(R.id.fab);
-        System.out.println("called");
+        System.out.println("called11111");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PhoneNumberEdit.class);
+                Intent intent = new Intent(getActivity(), PhoneNumberAdd.class);
                 startActivity(intent);
             }
         });
         System.out.println("reached1");
-        new JSONTask().execute("http://192.249.18.247:3000/post");
+        new JSONTask().execute("http://192.249.18.227:3000/users");
         return view;
     }
     public class JSONTask extends AsyncTask<String, String, String>{
@@ -77,10 +73,6 @@ public class PhoneNumberFragment extends Fragment {
         protected String doInBackground(String... urls) {
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("name", "sun");
-                jsonObject.accumulate("number", "010-0000-0000");
-                jsonObject.accumulate("email", "sun@gmail.com");
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
                 try{
@@ -89,26 +81,31 @@ public class PhoneNumberFragment extends Fragment {
                     System.out.println(urls[0]);
                     //연결을 함
                     con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    Log.d("connect false/true","connecting?");
                     con.connect();
-                    System.out.println("reached1");
-                    //서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-                    //서버로 부터 데이터를 받음
                     InputStream stream = con.getInputStream();
                     reader = new BufferedReader(new InputStreamReader(stream));
                     StringBuffer buffer = new StringBuffer();
+
+//                    con.setRequestMethod("GET");//POST방식으로 보냄
+//                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+//                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+//                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+//                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+//                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+//                    Log.d("connect false/true","connecting?");
+//                    con.connect();
+                    System.out.println("reached2");
+                    //서버로 보내기위해서 스트림 만듬
+//                    OutputStream outStream = con.getOutputStream();
+//                    //버퍼를 생성하고 넣음
+//                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+//                    writer.write(jsonObject.toString());
+//                    writer.flush();
+//                    writer.close();//버퍼를 받아줌
+                    //서버로 부터 데이터를 받음
+//                    InputStream stream = con.getInputStream();
+//                    reader = new BufferedReader(new InputStreamReader(stream));
+//                    StringBuffer buffer = new StringBuffer();
                     String line = "";
                     while((line = reader.readLine()) != null){
                         buffer.append(line);
@@ -139,6 +136,7 @@ public class PhoneNumberFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result){
+
             super.onPostExecute(result);
             //Log.d("request ===>>>>>   ",result);
             String json = "{contacts:"+result+"}";
@@ -149,10 +147,22 @@ public class PhoneNumberFragment extends Fragment {
                     jsonObject = contactArray.getJSONObject(i);
                     System.out.println(jsonObject.getString("name"));
                     System.out.println(jsonObject.getString("number"));
-                    phoneNumbers.add(new PhoneNumber(jsonObject.getString("name"), jsonObject.getString("number")));
+                    System.out.println(jsonObject.getString("email"));
+                    phoneNumbers.add(new PhoneNumber(jsonObject.getString("name"), jsonObject.getString("number"), jsonObject.getString("email")));
                 }
                 adapter = new PhoneNumberAdapter(getContext(), phoneNumbers);
                 listView.setAdapter(adapter);
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getActivity(), PhoneNumberEdit.class);
+                        intent.putExtra("Name", phoneNumbers.get(position).getName());
+                        intent.putExtra("Number", phoneNumbers.get(position).getNumber());
+                        intent.putExtra("Email", phoneNumbers.get(position).getEmail());
+                        startActivity(intent);
+                        return false;
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }

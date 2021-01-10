@@ -17,7 +17,7 @@ import com.example.weektwotest.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -31,11 +31,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position) {
             case 0:
-                return PlaceholderFragment.newInstance(position + 1);
+                return PhoneNumberFragment.newInstance(position + 1);
             case 1:
                 return GalleryFragment.newInstance(position + 1);
             case 2:
-                return PlaceholderFragment.newInstance(position + 1);
+                return FreeFragment.newInstance(position + 1);
             default:
                 return null;
         }

@@ -25,25 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
-        tabs.addTab(tabs.newTab().setText("Contacts"));
-        tabs.addTab(tabs.newTab().setText("Gallery"));
-        tabs.addTab(tabs.newTab().setText("Free"));
-        tabs.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
-        tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-//        tabs.setupWithViewPager(viewPager);
+        tabs.setupWithViewPager(viewPager);
 
 //        FloatingActionButton fab = findViewById(R.id.fab1);
 //
