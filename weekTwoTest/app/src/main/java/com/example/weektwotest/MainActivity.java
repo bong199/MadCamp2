@@ -1,7 +1,11 @@
 package com.example.weektwotest;
 
+import android.content.Intent;
 import android.os.Bundle;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
+import com.example.weektwotest.ui.main.FacebookActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -21,11 +25,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // facebook activity ___________________________________________________
+//        Intent intent = new Intent(this, FacebookActivity.class);
+//        startActivity(intent);
+        //______________________________________________________________________
+
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
 
 //        FloatingActionButton fab = findViewById(R.id.fab1);
 //

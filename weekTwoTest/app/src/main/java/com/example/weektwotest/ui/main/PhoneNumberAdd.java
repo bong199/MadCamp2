@@ -46,7 +46,7 @@ public class PhoneNumberAdd extends AppCompatActivity{
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTask().execute("http://192.249.18.227:3000/post");
+                new JSONTask().execute("http://192.249.18.247:3030/post");
             }
         });
         Button cancelBtn = findViewById(R.id.cancel_button);
