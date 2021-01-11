@@ -57,6 +57,7 @@ public class PhoneNumberFragment extends Fragment {
         listView = view.findViewById(R.id.cont_lv);
         FloatingActionButton fab = view.findViewById(R.id.fab);
         System.out.println("called11111");
+        phoneNumbers.clear();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
