@@ -99,7 +99,6 @@ public class FacebookActivity extends AppCompatActivity {
         loginButton2 = findViewById(R.id.custom_login_button);
         idEdit = findViewById(R.id.id_edit);
         pwEdit = findViewById(R.id.pw_edit);
-        loginAccount = new JSONObject();
 
         loginButton2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +106,10 @@ public class FacebookActivity extends AppCompatActivity {
                 String idString = idEdit.getText().toString();
                 String pwString = pwEdit.getText().toString();
                 try {
+                    loginAccount = new JSONObject();
                     loginAccount.accumulate("ID", idString);
                     loginAccount.accumulate("PW", pwString);
+                    System.out.println(loginAccount.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

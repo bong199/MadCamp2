@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.example.weektwotest.ui.main.TimetableView
+        android:id="@+id/timetable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:column_count="6"
+        app:header_highlight_color="@color/default_header_highlight_color"
+        app:header_highlight_image="@drawable/ic_launcher_foreground"
+        app:header_highlight_image_size="36dp"
+        app:header_highlight_type="image"
+        app:row_count="12"
+        app:side_cell_width="30dp"
+        app:start_time="9"
+        app:sticker_colors="@color/default_header_highlight_color"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
