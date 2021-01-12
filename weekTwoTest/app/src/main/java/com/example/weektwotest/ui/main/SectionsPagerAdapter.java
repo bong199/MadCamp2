@@ -17,7 +17,7 @@ import com.example.weektwotest.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2,R.string.tab_text_3, R.string.tab_text_4};  // 여기다가 새로운 탭 이름 추가
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -35,6 +35,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return GalleryFragment.newInstance(position + 1);
             case 2:
+                return PostFragment.newInstance(position + 1);
+            case 3:
                 return FreeFragment.newInstance(position + 1);
             default:
                 return null;
@@ -51,6 +53,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 3;
+        return 4; // 4로 바꿔
     }
 }

@@ -116,47 +116,9 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-        /*
-        camera = view.findViewById(R.id.camera);
-        gallery = view.findViewById(R.id.gallery);
-        context = getContext();
-        checkSelfPermission();
 
-        gallery.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK);
-                i.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                //i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                i.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                //i.setDataAndType(photoURI,"image/*");
-                // ******** code for crop image
-
-                //i.putExtra("crop", "true");
-                //i.putExtra("aspectX", 100);
-                //i.putExtra("aspectY", 100);
-                //i.putExtra("outputX", 256);
-                //i.putExtra("outputY", 356);
-
-
-                try {
-                    i.putExtra("data", true);
-                    startActivityForResult(
-                            Intent.createChooser(i, "Select Picture"), 0);
-                } catch (
-                        ActivityNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-
-
-            }
-        });*/ //1주차 관련 UI
-//        tvData = view.findViewById(R.id.textView2);
         fabCamera = view.findViewById(R.id.fab);
         fabUpload = view.findViewById(R.id.fabUpload);
-        //textView = view.findViewById(R.id.textView);
         ImageView imageView = view.findViewById(R.id.imageView);
         fabCamera.setOnClickListener(this);
         fabUpload.setOnClickListener(this);
@@ -416,7 +378,6 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
 
             Call<ResponseBody> req = apiService.postImage(body, name);
-            show();
 
             req.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -425,9 +386,10 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                     if (response.code() == 200) {
                         //textView.setText("Uploaded Successfully!");
                         //textView.setTextColor(Color.BLUE);
+                        show();
                     }
 
-                    Toast.makeText(getActivity().getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -554,6 +516,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                     ImageClass imageclass = new ImageClass();
                     jsonObject = imageArray.getJSONObject(i);
                     imageclass.setImage(jsonObject.getString("path"));
+                    imageclass.setContent(jsonObject.getString("context"));
                     imagecon.add(imageclass);
                     images.add(jsonObject.getString("path"));
                     System.out.println(jsonObject.getString("path"));

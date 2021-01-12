@@ -2,7 +2,8 @@
     <string name="app_name">weekTwoTest</string>
     <string name="tab_text_1">Contacts</string>
     <string name="tab_text_2">Gallery</string>
-    <string name="tab_text_3">Time Table</string>
+    <string name="tab_text_3">Bulletin</string>
+    <string name="tab_text_4">Time Table</string>
     <string name="facebook_app_id">320841415846646</string>
     <string name="fb_login_protocol_scheme">fb320841415846646</string>
 

@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:contentDescription="Gallery image"
@@ -28,13 +28,13 @@
             tools:layout_editor_absoluteX="98dp" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/post_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2000.10.12" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/post_content"
             android:layout_gravity="center"
             android:text= "집에 너무 너무 너무 너무 가고 싶어요 ....."
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -46,24 +46,23 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit" />
+                android:text="좋아요" />
 
             <Button
-                android:id="@+id/button3"
-                android:layout_marginLeft="5dp"
+                android:id="@+id/post_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="댓글달기" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+            <!--<EditText
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="share" />
+                android:layout_marginLeft="5dp"/>-->
+
         </LinearLayout>
 
 
