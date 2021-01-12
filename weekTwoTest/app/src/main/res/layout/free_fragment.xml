@@ -3,15 +3,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="bottom">
+    <RelativeLayout
+        android:id="@+id/relative_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageButton
+            android:id="@+id/write_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitStart"
+            android:layout_alignParentLeft="true"
+            />
+    <ImageButton
+        android:id="@+id/subj_add_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitStart"
+        android:layout_alignParentRight="true"
+        />
+    </RelativeLayout>
 
     <com.example.weektwotest.ui.main.TimetableView
         android:id="@+id/timetable"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_weight="4"
         app:column_count="6"
         app:header_highlight_color="@color/default_header_highlight_color"
         app:header_highlight_image="@drawable/ic_launcher_foreground"
@@ -22,5 +44,12 @@
         app:start_time="9"
         app:sticker_colors="@color/default_header_highlight_color"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/recyclerview_free_fragment" />
+
+</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

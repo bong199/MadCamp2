@@ -70,6 +70,10 @@
             android:name=".ui.main.PhoneNumberEdit"
             android:label="Edit">
         </activity>
+        <activity
+            android:name=".ui.main.SubjectInfoActivity"
+            android:label="Info">
+        </activity>
     </application>
 
 </manifest>

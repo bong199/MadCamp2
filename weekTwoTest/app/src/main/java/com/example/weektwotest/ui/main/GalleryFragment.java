@@ -32,6 +32,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weektwotest.R;
@@ -108,6 +109,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.gallery_fragment2, container, false);
         recyclerView = view.findViewById(R.id.recyclerview_gallery_images);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         /*
         camera = view.findViewById(R.id.camera);
@@ -520,7 +522,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             ArrayList<String> images = new ArrayList<>();
-            Log.d("onPostExcute ====  >>>>",result);
+//            Log.d("onPostExcute ====  >>>>",result);
             String json = "{imgPaths:"+result+"}";
             try{
                 JSONObject jsonObject = new JSONObject(json);

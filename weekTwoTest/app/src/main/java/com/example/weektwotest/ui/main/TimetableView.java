@@ -70,17 +70,14 @@ public class TimetableView extends LinearLayout {
     public TimetableView(Context context) {
         super(context, null);
         this.context = context;
-        System.out.println("생성자1");
     }
 
     public TimetableView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        System.out.println("생성자2");
     }
 
     public TimetableView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        System.out.println("생성자3");
         this.context = context;
         getAttrs(attrs);
         init();
@@ -96,7 +93,7 @@ public class TimetableView extends LinearLayout {
         headerTitle = a.getResources().getStringArray(titlesId);
         int colorsId = a.getResourceId(R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color);
         System.out.println(colorsId);
-        stickerColors = a.getResources().getStringArray(colorsId);
+//        stickerColors = a.getResources().getStringArray(colorsId);
         stickerColors = new String[9];
         stickerColors[0] = "#f08676";
         stickerColors[1] = "#ecc369";

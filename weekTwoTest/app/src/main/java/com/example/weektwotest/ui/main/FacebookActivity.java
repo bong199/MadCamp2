@@ -249,6 +249,11 @@ public class FacebookActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if(result.equals("YES")) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                try {
+                    intent.putExtra("myId", loginAccount.getString("ID"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 startActivity(intent);
             }
             else {
