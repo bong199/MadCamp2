@@ -106,8 +106,8 @@ public class FacebookActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new JSONTask().execute("http://192.249.18.247:3030/post_login");
-                new JSONTask().execute("http://192.249.18.247:3000/post_login");
+                new JSONTask().execute("http://192.249.18.247:3030/post_login"); // 전화번호
+                new JSONTask().execute("http://192.249.18.247:3000/post_login"); // 이미지 외 다
             }
         });
     }
@@ -181,6 +181,11 @@ public class FacebookActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if(result.equals("YES")) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                try {
+                    intent.putExtra("myId", loginAccount.getString("ID"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 startActivity(intent);
                 return;
             }

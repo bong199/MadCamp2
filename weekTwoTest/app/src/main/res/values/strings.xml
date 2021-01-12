@@ -7,6 +7,12 @@
     <string name="facebook_app_id">320841415846646</string>
     <string name="fb_login_protocol_scheme">fb320841415846646</string>
 
-
-
+    <string-array name="default_header_title">
+        <item></item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+    </string-array>
 </resources>
