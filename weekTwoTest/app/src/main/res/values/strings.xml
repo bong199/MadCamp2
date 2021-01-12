@@ -3,8 +3,9 @@
     <string name="tab_text_1">Contacts</string>
     <string name="tab_text_2">Gallery</string>
     <string name="tab_text_3">Time Table</string>
+    <string name="facebook_app_id">320841415846646</string>
+    <string name="fb_login_protocol_scheme">fb320841415846646</string>
 
-    <string name="facebook_app_id">785039265415793</string>
-    <string name="fb_login_protocol_scheme">fb785039265415793</string>
+
 
 </resources>

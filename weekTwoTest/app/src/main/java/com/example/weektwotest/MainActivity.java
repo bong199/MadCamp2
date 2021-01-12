@@ -2,8 +2,7 @@ package com.example.weektwotest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+
 
 import com.example.weektwotest.ui.main.FacebookActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,9 +34,11 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weektwotest.MainActivity;
 import com.example.weektwotest.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -81,6 +86,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     public Button gallery;
     public Context context;
     public GalleryAdapter2 adapter;
+    private JSONObject loginAccount;
     public ArrayList<Uri> imageID = new ArrayList<Uri>();
 //    TextView tvData;
     ApiService apiService;
@@ -92,7 +98,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     private final static int IMAGE_RESULT = 200;
     FloatingActionButton fabCamera, fabUpload;
     Bitmap mBitmap;
-    TextView textView;
+    //TextView textView;
 
     public static GalleryFragment newInstance(int index) {
         GalleryFragment fragment = new GalleryFragment();
@@ -107,8 +113,9 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.gallery_fragment2, container, false);
         recyclerView = view.findViewById(R.id.recyclerview_gallery_images);
+        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
         /*
         camera = view.findViewById(R.id.camera);
         gallery = view.findViewById(R.id.gallery);
@@ -149,7 +156,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 //        tvData = view.findViewById(R.id.textView2);
         fabCamera = view.findViewById(R.id.fab);
         fabUpload = view.findViewById(R.id.fabUpload);
-        textView = view.findViewById(R.id.textView);
+        //textView = view.findViewById(R.id.textView);
         ImageView imageView = view.findViewById(R.id.imageView);
         fabCamera.setOnClickListener(this);
         fabUpload.setOnClickListener(this);
@@ -212,6 +219,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
         for (ResolveInfo res : listGallery) {
             Intent intent = new Intent(galleryIntent);
+            Log.d("gallery!!!!!!!!!","pofkgjdflkgjdlfkgjldfkgjldfkgjldfkgjldfkgj");
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
             allIntents.add(intent);
@@ -256,15 +264,29 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
 
                 String filePath = getImageFilePath(data);
+                File file = new File(filePath);
                 if (filePath != null) {
                     mBitmap = BitmapFactory.decodeFile(filePath);
                     //imageView.setImageBitmap(mBitmap);
+                    if (Build.VERSION.SDK_INT >= 29){
+                        ImageDecoder.Source source = ImageDecoder.createSource(getActivity().getContentResolver(),Uri.fromFile(file));
+                        try {
+                            mBitmap = ImageDecoder.decodeBitmap(source);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        mBitmap = BitmapFactory.decodeFile(filePath);
+                        //mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
+                    }
                 }
             }
 
         }
 
     }
+
 
 
     private String getImageFromFilePath(Intent data) {
@@ -394,13 +416,15 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
 
             Call<ResponseBody> req = apiService.postImage(body, name);
+            show();
+
             req.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     if (response.code() == 200) {
-                        textView.setText("Uploaded Successfully!");
-                        textView.setTextColor(Color.BLUE);
+                        //textView.setText("Uploaded Successfully!");
+                        //textView.setTextColor(Color.BLUE);
                     }
 
                     Toast.makeText(getActivity().getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
@@ -408,8 +432,8 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    textView.setText("Uploaded Failed!");
-                    textView.setTextColor(Color.RED);
+                    //textView.setText("Uploaded Failed!");
+                    //textView.setTextColor(Color.RED);
                     Toast.makeText(getActivity().getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
                 }
@@ -427,10 +451,10 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT);
+                startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT);//사진 가져오고
                 break;
 
-            case R.id.fabUpload:
+            case R.id.fabUpload://사진 올리기!!!
                 if (mBitmap != null)
                     multipartImageUpload();
                 else {
@@ -520,13 +544,17 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             ArrayList<String> images = new ArrayList<>();
+            ArrayList<ImageClass> imagecon = new ArrayList<ImageClass>();
             Log.d("onPostExcute ====  >>>>",result);
             String json = "{imgPaths:"+result+"}";
             try{
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray imageArray = jsonObject.getJSONArray("imgPaths");
                 for(int i=0; i<imageArray.length(); i++) {
+                    ImageClass imageclass = new ImageClass();
                     jsonObject = imageArray.getJSONObject(i);
+                    imageclass.setImage(jsonObject.getString("path"));
+                    imagecon.add(imageclass);
                     images.add(jsonObject.getString("path"));
                     System.out.println(jsonObject.getString("path"));
                 }
@@ -534,7 +562,8 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
             }
             //new ImageRoader().getBitmapImg(images.get(0));
-            adapter = new GalleryAdapter2(getContext(), images, new GalleryAdapter2.PhotoListener() {
+
+            adapter = new GalleryAdapter2(getContext(), imagecon, new GalleryAdapter2.PhotoListener() {
                 @Override
                 public void onPhotoClick(String path) {
 
@@ -547,47 +576,107 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    void show()
+    {
+        final EditText edittext = new EditText(getContext());
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("AlertDialog Title");
+        builder.setMessage("AlertDialog Content");
+        builder.setView(edittext);
+        builder.setPositiveButton("입력",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(context.getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                        Log.d("hoemeldkfjlsdkfjlsdf",edittext.getText().toString());
+                        loginAccount = new JSONObject();
+                        try {
+                            loginAccount.accumulate("context", edittext.getText().toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        new JSONTaskContext().execute("http://192.249.18.247:3000/post_context");
 
-    /*
-    public void checkSelfPermission() {
-        String temp = "";
-        //파일 읽기 권한 확인
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            temp += Manifest.permission.READ_EXTERNAL_STORAGE + " ";
-        }
-        //파일 쓰기 권한 확인
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            temp += Manifest.permission.WRITE_EXTERNAL_STORAGE + " ";
-        }
-        if (TextUtils.isEmpty(temp) == false) {
-            // 권한 요청
-            ActivityCompat.requestPermissions(getActivity(), temp.trim().split(" "), 1);
-        } else {
-            //Toast.makeText(this, "권한을 모두 허용", Toast.LENGTH_SHORT).show();
-        }
+                    }
+                });
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                });
+        builder.show();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("image", "image");
-        //super method removed
-        if (data != null) {
-
-            Uri selectedImage = data.getData();
-            imageID.add(selectedImage);
-
-            Log.d("gallery==>>>>>>>>",selectedImage.toString());
-
-        } else {
-            Toast.makeText(getActivity(), "Try Again!!", Toast.LENGTH_SHORT).show();
+    public class JSONTaskContext extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.accumulate("user_id", user_id);
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+                try{
+                    //URL url = new URL("http://192.249.18.247:3000/users");
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    Log.d("connect false/true","connecting?");
+                    con.connect();
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(loginAccount.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+                    System.out.println("cccccccccccccccc");
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+                    reader = new BufferedReader(new InputStreamReader(stream));
+                    StringBuffer buffer = new StringBuffer();
+                    String line = "";
+                    while((line = reader.readLine()) != null){
+                        buffer.append(line);
+                    }
+                    Log.d("buffer ===>>>>", buffer.toString());
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+                } catch (MalformedURLException e){
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(con != null){
+                        con.disconnect();
+                    }
+                    /*try {
+                        if(reader != null){
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
         }
-        super.onActivityResult(requestCode, resultCode, data);
-        //Gridview에 나타내기!!!!!!!
-        adapter = new GalleryAdapter(context, imageID);
-        Log.d("adapter_run","adapter_running!!!!!!!");
-        gridView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }*/ //1주차 관련 UI
+
+        @Override
+        protected void onPostExecute(String result){
+            //Log.d("qqqqqqqqqqqqqqq",result);
+            super.onPostExecute(result);
+
+
+        }
+    }
 
 }
