@@ -1,5 +1,6 @@
 package com.example.weektwotest.ui.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -24,10 +25,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ItemViewHolder
     private Context context;
 
     private ArrayList<ImageClass> mData;
+    private Activity activity;
 
     public  PostAdapter(Context context, ArrayList<ImageClass> mData){
         this.context = context;
         this.mData = mData;
+        //this.activity = activity;
     }
 
     @NonNull

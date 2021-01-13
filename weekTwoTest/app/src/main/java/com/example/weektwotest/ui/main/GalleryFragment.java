@@ -542,15 +542,17 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     void show()
     {
         final EditText edittext = new EditText(getContext());
+        final ImageView image = new ImageView(getContext());
+        image.setImageBitmap(mBitmap);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("AlertDialog Title");
-        builder.setMessage("AlertDialog Content");
+        builder.setTitle("게시글");
+        builder.setMessage("일과를 작성하세요.+");
         builder.setView(edittext);
         builder.setPositiveButton("입력",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(context.getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context.getApplic  ationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         Log.d("hoemeldkfjlsdkfjlsdf",edittext.getText().toString());
                         loginAccount = new JSONObject();
                         try {

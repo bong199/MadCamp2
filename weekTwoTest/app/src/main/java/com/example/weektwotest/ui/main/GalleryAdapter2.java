@@ -1,12 +1,14 @@
 package com.example.weektwotest.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -57,11 +59,14 @@ public class GalleryAdapter2 extends RecyclerView.Adapter<GalleryAdapter2.ItemVi
             }
         });
         System.out.println("평생 학습을 해야하는건 너무나도 신나는 일입니다아러ㅣㄴ아허ㅣㄹ하ㅓ리아허ㅣㄹ아허링하ㅓ");
-        holder.edit.setOnClickListener(new View.OnClickListener() {
+        holder.commenting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("평생 학습을 해야하는건 너무나도 신나는 일입니다아러ㅣㄴ아허ㅣㄹ하ㅓ리아허ㅣㄹ아허링하ㅓ");
                 Log.d("edit_button","button click????????");
+                Intent intent = new Intent(v.getContext(), CommentActivity.class);
+                intent.putExtra("image_path",mData.get(position).getImage());
+                context.startActivity(intent);
             }
         });
     }
@@ -75,8 +80,8 @@ public class GalleryAdapter2 extends RecyclerView.Adapter<GalleryAdapter2.ItemVi
         TextView content;
         TextView date;
         private Button edit;
+        private ImageButton commenting;
         private Button share;
-        private Button star;
 
         public ItemViewHolder(View inflate) {
             super(inflate);
@@ -84,8 +89,8 @@ public class GalleryAdapter2 extends RecyclerView.Adapter<GalleryAdapter2.ItemVi
             content = inflate.findViewById(R.id.textView);
             date = inflate.findViewById(R.id.date);
             edit = inflate.findViewById(R.id.button2);
-            star = inflate.findViewById(R.id.button3);
-            share = inflate.findViewById(R.id.button4);
+            commenting = inflate.findViewById(R.id.button3);
+            //share = inflate.findViewById(R.id.button4);
 
 
         }

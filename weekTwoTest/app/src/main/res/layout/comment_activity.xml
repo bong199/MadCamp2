@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:id="@+id/chat_recycler_view"
             android:layout_above="@id/bottom"
-            tools:listitem="@layout/comment_left"/>
+            tools:listitem="@layout/chat_item_right"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -23,11 +23,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ItemViewHolder
 
     private Context context;
 
-    private ArrayList<ImageClass> mData;
+    private ArrayList<Chatclass> mData;
+    private String user_id;
 
-    public  ChatAdapter(Context context, ArrayList<ImageClass> mData){
+    public  ChatAdapter(Context context, ArrayList<Chatclass> mData,String user_id){
         this.context = context;
         this.mData = mData;
+        this.user_id = user_id;
     }
 
     @NonNull
@@ -49,20 +51,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ItemViewHolder holder, int position) {
 
-        holder.post_content.setText(mData.get(position).getContent());
-        holder.post_date.setText(mData.get(position).getDate());
-        holder.post_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("edit_button","button click????????");
-                Intent intent = new Intent(v.getContext(), CommentActivity.class);
-                /*intent.putExtra("Name", phoneNumbers.get(position).getName());
-                intent.putExtra("Number", phoneNumbers.get(position).getNumber());
-                intent.putExtra("Email", phoneNumbers.get(position).getEmail());*/
-                context.startActivity(intent);
-            }
-        });
-
+        holder.commenting.setText(mData.get(position).getComment());
+        if(!(mData.get(position).getNickname().equals(user_id))){
+            holder.nickname.setText(mData.get(position).getNickname());
+        }
     }
 
     @Override
@@ -71,25 +63,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ItemViewHolder
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView post_image;
-        TextView post_content;
-        TextView post_date;
-        private Button like;
-        Button post_comment;
+        TextView commenting;
+        TextView nickname;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            post_image = itemView.findViewById(R.id.post_image);
-            post_content = itemView.findViewById(R.id.post_content);
-            post_date = itemView.findViewById(R.id.post_date);
-            like = itemView.findViewById(R.id.like);
-            post_comment = itemView.findViewById(R.id.post_comment);
+
+            nickname = itemView.findViewById(R.id.nickname);
+            commenting = itemView.findViewById(R.id.show_message);
 
         }
     }
     @Override
     public int getItemViewType(int position) {
-        if (1==1){
+        if (mData.get(position).getNickname().equals(user_id)){
             return 1;
         } else {
             return 0;
