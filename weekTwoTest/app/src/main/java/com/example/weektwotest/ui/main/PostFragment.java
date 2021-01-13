@@ -54,7 +54,7 @@ public class PostFragment extends Fragment implements View.OnClickListener{
         recyclerView2.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
         recyclerView2.setHasFixedSize(true);
         recyclerView2.setLayoutManager(new GridLayoutManager(getContext(),1));
-        new JSONTask().execute("http://192.249.18.247:3000/post_fd");
+        new JSONTask().execute("http://192.249.18.227:3000/post_fd");
         return view;
     }
 

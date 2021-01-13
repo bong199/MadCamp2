@@ -106,8 +106,8 @@ public class FacebookActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new JSONTask().execute("http://192.249.18.247:3030/post_login"); // 전화번호
-                new JSONTask().execute("http://192.249.18.247:3000/post_login"); // 이미지 외 다
+                new JSONTask().execute("http://192.249.18.227:3030/post_login"); // 전화번호
+                new JSONTask().execute("http://192.249.18.227:3000/post_login"); // 이미지 외 다
             }
         });
     }
@@ -215,8 +215,8 @@ public class FacebookActivity extends AppCompatActivity {
                             //String id = object.getString("id");
                             loginAccount = new JSONObject();
                             loginAccount.accumulate("user_id",object.getString("id"));
-                            new JSONTask().execute("http://192.249.18.247:3030/post_face");//phone
-                            new JSONTask().execute("http://192.249.18.247:3000/post_face");//갤러리
+                            new JSONTask().execute("http://192.249.18.227:3030/post_face");//phone
+                            new JSONTask().execute("http://192.249.18.227:3000/post_face");//갤러리
 
                         } catch (JSONException e) {
                             e.printStackTrace();

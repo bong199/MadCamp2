@@ -65,6 +65,9 @@
             android:name=".MainActivity">
         </activity>
         <activity
+            android:name=".ui.main.SubjectAddActivity">
+        </activity>
+        <activity
             android:name=".ui.main.PhoneNumberAdd"
             android:label="add">
         </activity>

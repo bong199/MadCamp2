@@ -67,7 +67,7 @@ public class GalleryAdapter extends BaseAdapter {
 //            imageView.setImageBitmap(new ImageRoader().getBitmapImg(imageArray.get(position)));
 //            RequestOptions options = new RequestOptions();
 //            options.centerCrop();
-            Glide.with(context).load("http://192.249.18.247:3000/uploads/"+imageArray.get(position)).override(100, 200).into(imageView);
+            Glide.with(context).load("http://192.249.18.227:3000/uploads/"+imageArray.get(position)).override(100, 200).into(imageView);
             //---------------------------------------------------------------
             // 사진 항목들의 클릭을 처리하는 ImageClickListener 객체를 정의합니다.
             // 그리고 그것을 ImageView의 클릭 리스너로 설정합니다.

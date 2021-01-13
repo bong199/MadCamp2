@@ -126,7 +126,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         askPermissions();
         initRetrofitClient();
         System.out.println("reached0");
-        new JSONTask().execute("http://192.249.18.247:3000/post");
+        new JSONTask().execute("http://192.249.18.227:3000/post");
 
 
 
@@ -153,7 +153,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     private void initRetrofitClient() {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
-        apiService = new Retrofit.Builder().baseUrl("http://192.249.18.247:3000/").client(client).build().create(ApiService.class);
+        apiService = new Retrofit.Builder().baseUrl("http://192.249.18.227:3000/").client(client).build().create(ApiService.class);
     }
 
 
@@ -558,7 +558,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        new JSONTaskContext().execute("http://192.249.18.247:3000/post_context");
+                        new JSONTaskContext().execute("http://192.249.18.227:3000/post_context");
 
                     }
                 });

@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 public class ImageRoader {
-    private final String serverUrl = "http://192.249.18.247:3000/";
+    private final String serverUrl = "http://192.249.18.227:3000/";
     public ImageRoader() {
         new ThreadPolicy();//왜 있어야하는거지??? --> 모르겠음 ...
     }

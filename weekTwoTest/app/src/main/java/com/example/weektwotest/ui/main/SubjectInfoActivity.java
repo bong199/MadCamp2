@@ -80,7 +80,7 @@ public class SubjectInfoActivity extends AppCompatActivity implements SubjStuden
         System.out.println("olllpppppjpjj");
 
 
-        new JSONTask(this).execute("http://192.249.18.247:3000/get_subject_info"); // 수강생 목록 가져옴
+        new JSONTask(this).execute("http://192.249.18.227:3000/get_subject_info"); // 수강생 목록 가져옴
     }
 
     public class JSONTask extends AsyncTask<String, String, String> {
@@ -190,7 +190,7 @@ public class SubjectInfoActivity extends AppCompatActivity implements SubjStuden
         String newFId = regStudents.get(position).getId();
         System.out.println("follow button clk");
         System.out.println(newFId);
-        new JSONTaskF(newFId).execute("http://192.249.18.247:3000/get_friends_of");
+        new JSONTaskF(newFId).execute("http://192.249.18.227:3000/get_friends_of");
     }
     public class JSONTaskF extends AsyncTask<String, String, String> {
 

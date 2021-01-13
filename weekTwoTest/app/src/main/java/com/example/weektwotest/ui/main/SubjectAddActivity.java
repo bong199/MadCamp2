@@ -1,24 +1,18 @@
-package com.example.weektwotest;
+package com.example.weektwotest.ui.main;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-
-import com.example.weektwotest.ui.main.FacebookActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.example.weektwotest.ui.main.SectionsPagerAdapter;
+import com.example.weektwotest.MainActivity;
+import com.example.weektwotest.R;
 
 import org.json.JSONObject;
 
@@ -33,66 +27,59 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
-
+public class SubjectAddActivity extends AppCompatActivity {
     String myId;
-    String friendsJSONStr;
-
-    public String getMyId(){ return myId; }
-
-    public String getFriendsJSONStr(){ return friendsJSONStr; };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.subject_add_activity);
         myId = getIntent().getStringExtra("myId");
+        Spinner dropdown = findViewById(R.id.spinner1);
+        String[] subjects = new String[]{"","Algorithm", "Data_Structure", "Operating_System"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subjects);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("selec");
+                System.out.println(subjects[position]);
+                if(subjects[position] != "") {
+                    new JSONTask(subjects[position], myId).execute("http://192.249.18.227:3000/add_subj");
+                    new JSONTask(subjects[position], myId).execute("http://192.249.18.227:3000/add_subj_user");
+                }
+            }
 
-        // facebook activity ___________________________________________________
-//        Intent intent = new Intent(this, FacebookActivity.class);
-//        startActivity(intent);
-        //______________________________________________________________________
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
-
-//        FloatingActionButton fab = findViewById(R.id.fab1);
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-        new JSONTaskFL(myId).execute("http://192.249.18.227:3000/first_get_friends_of");
+            }
+        });
     }
-    public class JSONTaskFL extends AsyncTask<String, String, String> {
 
+    public class JSONTask extends AsyncTask<String, String, String> {
+
+        String subject;
         String myId;
 
-        public JSONTaskFL(String myId){
+        public JSONTask(String subject, String myId){
+            this.subject = subject;
             this.myId = myId;
         }
 
         @Override
         protected String doInBackground(String... urls) {
+
             try {
-                System.out.println("JSONTaskFL");
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("Subject", subject);
                 jsonObject.accumulate("myId", myId);
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
                 try{
                     //URL url = new URL("http://192.249.18.247:3000/users");
                     URL url = new URL(urls[0]);
+                    System.out.println(url);
                     //연결을 함
                     con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");//POST방식으로 보냄
@@ -163,11 +150,8 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 //            //tempTextView.setText(result);
-            System.out.println("FRIENDS!");
-            System.out.println(result);
-            friendsJSONStr = result;
-            System.out.println("uuuuu");
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
         }
     }
-
 }

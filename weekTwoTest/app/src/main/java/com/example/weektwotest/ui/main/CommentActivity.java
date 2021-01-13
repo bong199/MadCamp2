@@ -69,7 +69,7 @@ public class CommentActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new JSONTask().execute("http://192.249.18.247:3000/post_comment");
+                new JSONTask().execute("http://192.249.18.227:3000/post_comment");
             }
         });
 

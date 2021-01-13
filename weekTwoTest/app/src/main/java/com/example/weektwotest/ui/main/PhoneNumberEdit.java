@@ -55,7 +55,7 @@ public class PhoneNumberEdit extends AppCompatActivity{
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTask().execute("http://192.249.18.247:3030/post1");
+                new JSONTask().execute("http://192.249.18.227:3030/post1");
             }
         });
         Button cancelBtn = findViewById(R.id.cancel_button2);
@@ -70,7 +70,7 @@ public class PhoneNumberEdit extends AppCompatActivity{
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTaskD().execute("http://192.249.18.247:3030/post2");
+                new JSONTaskD().execute("http://192.249.18.227:3030/post2");
             }
         });
     }

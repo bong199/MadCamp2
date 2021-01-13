@@ -46,7 +46,7 @@ public class GalleryAdapter2 extends RecyclerView.Adapter<GalleryAdapter2.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position){
 //        holder.image.setImageResource(images[position]);
-        Glide.with(context).load("http://192.249.18.247:3000/uploads/"+mData.get(position).getImage()).into(holder.image);
+        Glide.with(context).load("http://192.249.18.227:3000/uploads/"+mData.get(position).getImage()).into(holder.image);
         holder.content.setText(mData.get(position).getContent());
         holder.date.setText(mData.get(position).getDate());
 

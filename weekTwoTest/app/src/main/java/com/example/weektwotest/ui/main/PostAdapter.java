@@ -41,7 +41,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ItemViewHolder holder, int position) {
 
-        Glide.with(context).load("http://192.249.18.247:3000/uploads/"+mData.get(position).getImage()).into(holder.post_image);
+        Glide.with(context).load("http://192.249.18.227:3000/uploads/"+mData.get(position).getImage()).into(holder.post_image);
         holder.post_content.setText(mData.get(position).getContent());
         holder.post_date.setText(mData.get(position).getDate());
         holder.post_comment.setOnClickListener(new View.OnClickListener() {
